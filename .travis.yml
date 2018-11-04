@@ -1,0 +1,13 @@
+language: rust
+
+sudo: false
+
+rust:
+  - nightly
+
+script:
+  - cargo build --all --verbose
+  - cargo build --all --verbose --release
+
+  - cargo test --all --verbose
+  - cargo test --all --verbose --release

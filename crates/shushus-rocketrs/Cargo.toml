@@ -1,0 +1,10 @@
+[package]
+name = "shushus-rocketrs"
+version = "0.1.0"
+
+authors = ["LightDiscord <root@arnaud.sh>"]
+license = "MIT"
+readme = "readme.md"
+repository = "https://github.com/LightDiscord/Shushus"
+
+[dependencies]

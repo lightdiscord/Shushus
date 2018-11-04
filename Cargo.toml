@@ -1,0 +1,18 @@
+[package]
+name = "shushus"
+version = "0.1.0"
+
+authors = ["LightDiscord <root@arnaud.sh>"]
+license = "MIT"
+readme = "readme.md"
+repository = "https://github.com/LightDiscord/Shushus"
+description = "Authentication for Rust"
+
+[workspace]
+members = [
+    "./",
+    "crates/shushus-github",
+    "crates/shushus-rocketrs",
+]
+
+[dependencies]
