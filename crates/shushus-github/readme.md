@@ -1,1 +1,0 @@
-# `shushus-github`

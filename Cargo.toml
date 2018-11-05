@@ -8,11 +8,21 @@ readme = "readme.md"
 repository = "https://github.com/LightDiscord/Shushus"
 description = "Authentication for Rust"
 
+[dependencies]
+http = "0.1.13"
+
 [workspace]
 members = [
     "./",
-    "crates/shushus-github",
+    "crates/shushus-oauth2",
     "crates/shushus-rocketrs",
 ]
 
-[dependencies]
+[dev-dependencies]
+rocket = "0.4.0-rc.1"
+futures = "0.1"
+tokio = "0.1"
+failure = "0.1.3"
+shushus-oauth2 = { path = "crates/shushus-oauth2" }
+shushus-rocketrs = { path = "crates/shushus-rocketrs" }
+rocket-futures = { git = "https://github.com/LightDiscord/rocket-futures" }

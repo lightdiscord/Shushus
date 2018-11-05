@@ -1,0 +1,24 @@
+[package]
+name = "shushus-oauth2"
+version = "0.1.0"
+
+authors = ["LightDiscord <root@arnaud.sh>"]
+license = "MIT"
+readme = "readme.md"
+repository = "https://github.com/LightDiscord/Shushus"
+
+[dependencies]
+futures = "0.1"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+failure = "0.1.3"
+hyper = "0.12"
+hyper-tls = "0.3"
+
+[dependencies.uuid]
+version = "0.7"
+features = ["v4"]
+
+[dependencies.shushus]
+path = "../.."
