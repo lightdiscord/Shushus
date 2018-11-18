@@ -16,6 +16,7 @@ macro_rules! builder_fields {
     };
 }
 
+#[derive(Clone)]
 pub struct Config {
     pub client_id: String,
     pub client_secret: String,

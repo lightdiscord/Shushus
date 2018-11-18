@@ -1,7 +1,12 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+extern crate shushus_oauth2;
+
+use shushus_oauth2::oauth::{ Basic, OAuth };
+use shushus_oauth2::Config;
+
+pub struct GitHub<C>(pub C);
+
+impl GitHub<Basic> {
+    pub fn new(config: Config) -> Self {
+        GitHub(Basic::new(config))
     }
 }

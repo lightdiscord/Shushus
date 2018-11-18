@@ -8,3 +8,4 @@ readme = "readme.md"
 repository = "https://github.com/LightDiscord/Shushus"
 
 [dependencies]
+shushus-oauth2 = { path = "../shushus-oauth2" }

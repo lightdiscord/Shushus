@@ -1,9 +1,9 @@
 use shushus::prelude::*;
 use shushus::redirection::Parameters;
+use shushus::http::{ header, uri::Uri };
 
 use states::States;
 use http::{ Response, client };
-use hyper::http::{ header, uri::Uri };
 use config::Config;
 use error::Error;
 
@@ -12,14 +12,27 @@ use failure::Fallible;
 use uuid::Uuid;
 use std::str::FromStr;
 
-pub struct OAuth {
+pub struct OAuth<B> {
+    pub backend: B,
+}
+
+impl<B> OAuth<B> {
+    pub fn new(config: Config, backend: B) -> Self {
+        OAuth {
+            backend,
+        }
+    }
+
+}
+
+pub struct Basic {
     config: Config,
     states: States,
 }
 
-impl OAuth {
+impl Basic {
     pub fn new(config: Config) -> Self {
-        OAuth {
+        Basic {
             config,
             states: States::default()
         }
@@ -73,4 +86,12 @@ impl OAuth {
 
         Ok(future)
     }
+}
+
+impl<D> FetchProfile<D, ()> {
+    fn fetch(&self, data: D) {}
+}
+
+pub trait FetchProfile<D, P> {
+    fn fetch(&self, data: D) -> P;
 }
