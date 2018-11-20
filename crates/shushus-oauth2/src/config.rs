@@ -1,113 +1,93 @@
-use crate::Error;
-
 use shushus::http::Uri;
 use failure::Fallible;
 
-macro_rules! builder_fields {
-    ($struct:ident => [$(($field:ident, $type:ty)),+]) => {
-        impl $struct {
-            $(
-                pub fn $field(mut self, $field: $type) -> Self {
-                    self.$field = Some($field);
-                    self
-                }
-            )+
-        }
-    };
+#[derive(Debug, Fail)]
+pub enum ConfigError {
+    #[fail(display = "invalid configuration")]
+    InvalidConfiguration
 }
 
 pub struct Config {
-    pub client_id: String,
-    pub client_secret: String,
-    pub redirect_url: Uri,
-    pub authorization_url: Uri,
-    pub token_url: Uri,
-    pub scopes: Vec<String>,
+    client_id: String,
+    client_secret: String,
+    redirect_uri: Uri,
+    authorization_uri: Uri,
+    token_uri: Uri,
+    scopes: Vec<String>
 }
 
-impl Config {
-    pub fn builder() -> ConfigBuilder {
-        ConfigBuilder::default()
-    }
-}
-
-#[derive(Debug)]
+#[derive(Default)]
 pub struct ConfigBuilder {
-    pub client_id: Option<String>,
-    pub client_secret: Option<String>,
-    pub redirect_url: Option<Uri>,
-    pub authorization_url: Option<Uri>,
-    pub token_url: Option<Uri>,
-    pub scopes: Vec<String>,
-}
-
-impl Default for ConfigBuilder {
-    fn default() -> Self {
-        ConfigBuilder {
-            client_id: None,
-            client_secret: None,
-            redirect_url: None,
-            authorization_url: None,
-            token_url: None,
-            scopes: Vec::new()
-        }
-    }
-}
-
-builder_fields! {
-    ConfigBuilder => [
-        (client_id, String),
-        (client_secret, String),
-        (redirect_url, Uri),
-        (authorization_url, Uri),
-        (token_url, Uri)
-    ]
+    client_id: Option<String>,
+    client_secret: Option<String>,
+    redirect_uri: Option<Uri>,
+    authorization_uri: Option<Uri>,
+    token_uri: Option<Uri>,
+    scopes: Vec<String>
 }
 
 impl ConfigBuilder {
+    pub fn client_id(mut self, client_id: String) -> Self {
+        self.client_id = Some(client_id);
+        self
+    }
+
+    pub fn client_secret(mut self, client_secret: String) -> Self {
+        self.client_secret = Some(client_secret);
+        self
+    }
+
+    pub fn redirect_uri(mut self, redirect_uri: Uri) -> Self {
+        self.redirect_uri = Some(redirect_uri);
+        self
+    }
+
+    pub fn authorization_uri(mut self, authorization_uri: Uri) -> Self {
+        self.authorization_uri = Some(authorization_uri);
+        self
+    }
+
+    pub fn token_uri(mut self, token_uri: Uri) -> Self {
+        self.token_uri = Some(token_uri);
+        self
+    }
+
     pub fn scopes(mut self, scopes: Vec<String>) -> Self {
         self.scopes = scopes;
         self
     }
 
-    // TODO: Error type
-    pub fn finalize(self) -> Fallible<Config> {
+    pub fn build(self) -> Fallible<Config> {
         let ConfigBuilder {
             client_id,
             client_secret,
-            redirect_url,
-            authorization_url,
-            token_url,
+            redirect_uri,
+            authorization_uri,
+            token_uri,
             scopes
         } = self;
 
-        let needed = (
-            client_id,
-            client_secret,
-            redirect_url,
-            authorization_url,
-            token_url
-        );
+        let check = (client_id, client_secret, redirect_uri, authorization_uri, token_uri);
 
         if let (
             Some(client_id),
             Some(client_secret),
-            Some(redirect_url),
-            Some(authorization_url),
-            Some(token_url)
-        ) = needed {
+            Some(redirect_uri),
+            Some(authorization_uri),
+            Some(token_uri)
+        ) = check {
             let config = Config {
                 client_id,
                 client_secret,
-                redirect_url,
-                authorization_url,
-                token_url,
+                redirect_uri,
+                authorization_uri,
+                token_uri,
                 scopes
             };
 
             Ok(config)
         } else {
-            Err(Error::InvalidConfiguration)?
+            Err(ConfigError::InvalidConfiguration)?
         }
     }
 }

@@ -14,7 +14,10 @@ http = "0.1.13"
 [workspace]
 members = [
     "./",
+
     "crates/shushus-oauth2",
+    "crates/shushus-github",
+
     "crates/shushus-rocketrs",
 ]
 
@@ -25,4 +28,5 @@ tokio = "0.1"
 failure = "0.1.3"
 shushus-oauth2 = { path = "crates/shushus-oauth2" }
 shushus-rocketrs = { path = "crates/shushus-rocketrs" }
+shushus-github = { path = "crates/shushus-github" }
 rocket-futures = { git = "https://github.com/LightDiscord/rocket-futures" }

@@ -1,0 +1,13 @@
+[package]
+name = "shushus-github"
+version = "0.1.0"
+
+authors = ["LightDiscord <root@arnaud.sh>"]
+license = "MIT"
+readme = "readme.md"
+repository = "https://github.com/LightDiscord/Shushus"
+
+[dependencies]
+shushus = { path = "../.." }
+shushus-oauth2 = { path = "../shushus-oauth2" }
+failure = "0.1"
